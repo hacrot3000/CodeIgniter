@@ -49,6 +49,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+
+$route['default_controller'] = "index";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['robots.txt'] = 'common/robots';
+
+$route['tips/(:any)'] = "welcome/tips/$1";
+
+
+//Category
+$route['category/([0-9]+)/(:any)'] = "index/index/category/$1/$2";
+$route['category/([0-9]+)'] = "index/index/category/$1";
+//Bài viết
+$route['post/([0-9]+)'] = "index/index/post/$1";
+$route['post/([0-9]+)/(:any)'] = "index/index/post/$1";
+$route['topic/([0-9]+)'] = "index/index/post/$1";
+$route['topic/([0-9]+)/(:any)'] = "index/index/post/$1";
+$route['(:any).html'] = "index/index/post/$1";
+
+//Phân trang ở trang chủ
+$route['p/([0-9]+)'] = "index/index/p/$1";
+//Nội dung lưu trữ
+$route['archive/([0-9]+)/(:any)/(:any)'] = "index/index/archive/$1/$2/$3/1";
+$route['archive/([0-9]+)/(:any)/(:any)/([0-9]+)'] = "index/index/archive/$1/$2/$3/$4";
+//Hiển thị trang tin
+$route['page/([0-9]+)'] = "index/index/page/$1";
+$route['page/([0-9]+)/(.*)'] = "index/index/page/$1";
+//Danh sách nhóm trang tin
+$route['resource/(:any)'] = "index/index/resource/$1";
+//Trang chào mừng
+$route['welcome/(:any)'] = "welcome/page/$1";
+//Liên kết
+$route['link/(:any)'] = "welcome/link/$1";
+/*
+ * Phần này để chuyển đổi link tương thích từ blogspot
+ */
+//Chuyển đổi link bài viết
+$route['([0-9]+)/([0-9]+)/(:any)'] = "index/index/$1/$2/$3";
+//Chuyển đổ link archive - bài viết theo tháng
+$route['([0-9]+)_([0-9]+)_([0-9]+)_archive.html'] = "index/index/archive/-1/$1-$2-01 00:00:00/$1-$2-31 23:59:59";
+/*
+ * Kết thúc phần này để chuyển đổi link tương thích từ blogspot
+ */
+/* End of file routes.php */
+/* Location: ./application/config/routes.php */

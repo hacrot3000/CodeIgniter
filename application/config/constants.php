@@ -83,3 +83,76 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+ 
+define("TIME_ONE_YEAR", 31536000);
+define("TIME_ONE_DAY", 86400);
+define("CACHE_LAST_UPDATE_DATA", 'last_update_data');
+
+
+define('PAGE_TYPE_INDEX', 1);
+define('PAGE_TYPE_POSTLIST', 2);
+define('PAGE_TYPE_CATEGORY', 4);
+define('PAGE_TYPE_SINGLEPOST', 8);
+define('PAGE_TYPE_SINGLEPAGE', 16);
+define('PAGE_TYPE_PAGELIST', 32);
+define('PAGE_TYPE_IN_ARCHIVES', 64);
+define('PAGE_TYPE_SEARCH', 128);
+define('PAGE_TYPE_PICASA', 256);
+define('PAGE_TYPE_ALLPAGE', 65535);
+define('PAGE_TYPE_WELCOME_HOME', 65536);
+define('PAGE_TYPE_AJAX', 131072);
+
+define('WIDGET_CUSTOM_HTML', 1);            //Need view, page_type
+define('WIDGET_SQL', 2);                    //Need view, page_type, sql, limit, content_column, max_length
+define('WIDGET_POST_LIST', 3);              //Need view, detect condition, detect max_length, detect limit
+define('WIDGET_CUSTOM_POST_LIST', 301);     //Need view, page_type, condition, max_length, limit, order
+define('WIDGET_SINGLE_POST', 4);            //Need view, detect id
+define('WIDGET_CUSTOM_SINGLE_POST', 401);   //Need view, page_type, condition, max_length
+define('WIDGET_ARCHIVES', 5);               //Need view, page_type, limit (optional), "order" => array("count","desc") (optional)
+define('WIDGET_CATEGORY', 6);               //Need view, page_type, limit (optional)
+define('WIDGET_LINK_LIST', 7);              //Need view, page_type, position
+define('WIDGET_POST_COMMENT', 8);           //Need view, detect post id, max_length
+define('WIDGET_CUSTOM_COMMENT', 9);         //Need view, page_type, condition, max_length
+define('WIDGET_SLIDESHOW', 10);             //Need view, page_type, position, limit, order
+define('WIDGET_PAGE_LIST', 11);             //Need view, page_type, group
+define('WIDGET_HOME_PAGE_LIST', 110);       //Need view
+define('WIDGET_PAGE_SINGLE', 12);           //Need view, page_type, group, condition = NULL if auto detect, max_length
+define('WIDGET_MULTI_PAGE', 13);            //Need view, page_type, group, condition, max_length, limit
+define('WIDGET_MENU', 14);                  //Need view, page_type, position
+define('WIDGET_POST_PAGINATION', 15);       //Need view
+define('WIDGET_ADVERTISES', 16);            //Need view, page_type, group, limit (optional)
+define('PAGE_HAVE_IMAGE', 121999);
+define('STRIP_TAB_CONTENT', 121998);
+define('NO_NEED_CATEGORY_INFO', 121997);
+define('ROLE_NORMAL_USER', 0);
+define('ROLE_PUBLISHER_USER', 1);
+define('ROLE_ADMIN', 2);
+define('ROLE_SUPER_ADMIN', 3);
+define('PAGE_BREAK_STRING', "<!--more-->");
+define('PAGE_BREAK_CKEDITER', '<div style="page-break-after: always;">');
+define('FRONT_END_IMAGE_FUNCTION', 'front_end_skin');
+define('CUSTOM_FRONT_END_IMAGE_FUNCTION', FALSE);
+
+define('HOMEPAGE_DEFAULT_NEW_TOPIC', 0);
+define('HOMEPAGE_DEFAULT_A_TOPIC', 1);
+define('HOMEPAGE_DEFAULT_A_PAGE', 2);
+define('HOMEPAGE_DEFAULT_A_CATEGORY', 3);
+
+
+define('TEMPLATE_SLIDE_BIG', "bigslide");
+define('TEMPLATE_SLIDE_MASTER_SMALL', "mastersmallslide");
+define('TEMPLATE_SLIDE_SMALL', "smallslide");
+define('TEMPLATE_SLIDE_MASTER_LISTING', "masterlistingslide");
+define('TEMPLATE_SLIDE_LISTING', "listingslide");
+define('TEMPLATE_NEWS', "news");
+define('TEMPLATE_STATIC_PAGE', "staticpage");
+define('TEMPLATE_CONTACT_PAGE', "contact");
+
+define('PER_PAGE_LISTING_SLIDE', 15);
+define('PER_PAGE_NEWS', 5);
+
+
+if (!defined('DS'))
+    define ('DS', DIRECTORY_SEPARATOR);
+
+define('ADV_MIDDLE_CONTENT_BREAK', 'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');//Don't forgot to change the ckeditor plugins googleadv

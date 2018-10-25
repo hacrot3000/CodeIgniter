@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+        date_default_timezone_set('Asia/Bangkok');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,108 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$serverName = str_replace("www.", "", $_SERVER['SERVER_NAME']);
+
+$serverList = array(
+    'IS_PRODUCTION',
+    'IS_PRODUCTION_BACKUP',
+    'IS_X10',
+    'IS_BLOGS_COM',
+    'IS_CONYEU_COM',
+    'IS_CONYEU_US',
+    'IS_PRODUCTION_HOSTINGER',
+    'IS_LOCAL_CHUVANAN',
+    'IS_PRODUCTION_CHUVANAN',
+);
+
+if ($_SERVER['SERVER_ADDR'] == '125.253.119.154' || $serverName == 'www2.chuongduong.net')
+    define('IS_ON_VPS', '_vps');
+else//hostinger.vn
+    define('IS_ON_VPS', '');
+
+//Debug local site
+if ($serverName == 'blogs.com')
+{
+    define('IS_BLOGS_COM', TRUE);
+}
+elseif ($serverName == 'duongtc.com' || $serverName == 'chuongduong.vn.ae')
+{
+    $serverName = 'duongtc.com';
+    define('IS_PRODUCTION', TRUE);
+}
+elseif ($serverName == 'chuvanan.com')
+{
+    define('IS_LOCAL_CHUVANAN', TRUE);
+}
+elseif ($serverName == 'xn--chuvnanqt-tcb.vn' || $serverName == 'chuvănanqt.vn')
+{
+    $serverName = 'chuvanan.vn';
+    define('IS_PRODUCTION_CHUVANAN', TRUE);
+}
+elseif ($serverName == 'conyeu.com' || $serverName == '192.168.122.1' || $serverName == '192.168.0.102' || $serverName == '172.16.0.27')
+{
+    define('IS_CONYEU_COM', TRUE);
+    $serverName = 'conyeu.com';
+}
+//Backup site
+elseif ($serverName == 'chuongduong.x10.mx')
+{
+    define('IS_X10', TRUE);
+}
+//Live site
+elseif ($serverName == 'chuongduong.net')
+{
+    if ($_SERVER['SERVER_ADDR'] == '31.170.164.17')//hostinger.vn
+    {
+        define('IS_PRODUCTION_HOSTINGER', TRUE);
+        $serverName = 'chuongduong.net.hostinger.vn';
+    }
+    else
+    {
+        define('IS_PRODUCTION', TRUE);
+    }
+}
+elseif ($serverName == 'www2.chuongduong.net')
+{
+    define('IS_PRODUCTION_BACKUP', TRUE);
+}
+elseif ($serverName == 'chuongduong.info' || $serverName == 'test.chuongduong.net')
+{
+    if ($_SERVER['SERVER_ADDR'] == '31.170.164.17')//hostinger.vn
+        define('IS_PRODUCTION_HOSTINGER', TRUE);
+    else
+        define('IS_PRODUCTION', TRUE);
+    $serverName = 'chuongduong.net.hostinger.vn';
+}
+elseif ($serverName == 'conyeu.us')
+{
+    define('IS_CONYEU_US', TRUE);
+}
+elseif ($serverName == 'xn--c0nyu-ksa.vn')
+{
+    $serverName = 'conyeu.us';
+    define('IS_CONYEU_US', TRUE);
+}
+elseif ($serverName == 'c0nyêu.vn')
+{
+    $serverName = 'conyeu.us';
+    define('IS_CONYEU_US', TRUE);
+}
+else
+{
+    exit();
+}
+
+foreach ($serverList as $val)
+{
+    if (!defined($val))
+        define ($val, FALSE);
+}
+
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+$config['base_url']	= "$protocol$serverName";
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +138,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -102,7 +205,8 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -116,7 +220,7 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = 'My_';
 
 /*
 |--------------------------------------------------------------------------
@@ -162,7 +266,8 @@ $config['composer_autoload'] = FALSE;
 | Note: This option is ignored for CLI requests.
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-–+=()&,áàảãạăắằẳẵặâấầẩẫậÁÀẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬđĐéèẻẽẹêếềểễệÉÈẺẼẸÊẾỀỂỄỆíìỉĩịÍÌỈĨỊóòỏõọôốồổỗộơớờởỡợÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢúùủũụưứừửữựÚÙỦŨỤƯỨỪỬỮỰýỳỷỹỵÝỲỶỸỴ';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -301,7 +406,7 @@ $config['cache_path'] = '';
 |	             of query parameters.
 |
 */
-$config['cache_query_string'] = FALSE;
+$config['cache_query_string'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -314,7 +419,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'APANtByhkUNlkdshsJHDNmndsjh154wwa84';
 
 /*
 |--------------------------------------------------------------------------
@@ -367,7 +472,7 @@ $config['encryption_key'] = '';
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
 */
-$config['sess_driver'] = 'files';
+$config['sess_driver'] = 'cookie';
 $config['sess_cookie_name'] = 'ci_session';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
@@ -390,10 +495,10 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
+$config['cookie_prefix']	= "duong_blogs_";
+$config['cookie_domain']	= "chuongduong.net";
+$config['cookie_path']		= "/blogs/";
+$config['cookie_secure']	= TRUE;
 $config['cookie_httponly'] 	= FALSE;
 
 /*
@@ -437,7 +542,12 @@ $config['csrf_exclude_uris'] = array();
 | by the output class.  Do not 'echo' any values with compression enabled.
 |
 */
-$config['compress_output'] = FALSE;
+$compress_output = FALSE;
+/** /
+if (!empty($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
+    $compress_output = TRUE;
+/**/
+$config['compress_output'] = $compress_output;
 
 /*
 |--------------------------------------------------------------------------
@@ -469,3 +579,40 @@ $config['time_reference'] = 'local';
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+$config['no_welcome'] = true;
+
+$config['custom_default_homepage'] = true;
+$config['module_comment'] = false;
+$config['module_gallery'] = false;
+$config['module_tracking'] = false;
+
+$config['custom_theme'] = '';
+
+$config['default_category'] = '';
+
+$config['media_folder'] = 'media/';
+
+$config['robots.txt'] = 'User-agent: *
+Crawl-delay: 5
+Disallow: /cgi-bin/
+Disallow: /admin/
+Disallow: /tracking/
+Disallow: /category/
+Disallow: /archive/
+Disallow: /frontend-skin/
+Disallow: /comment/
+Disallow: /user/
+Disallow: /2007/
+Disallow: /2008/
+Disallow: /2009/
+Disallow: /2010/
+Allow: /thinkmap/
+Disallow: /admin/';
+
+$config['extra_sitemap'] = array();
+
+$file = dirname(__FILE__) . '/domains/' . $serverName . '.php';
+if (file_exists($file))
+    include_once $file;

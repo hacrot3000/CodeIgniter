@@ -1,5 +1,7 @@
 <?php
 /**
+ * ========== WARNING - THIS FILE HAS A CUSTOM CHANGE (01) ==========
+ *
  * CodeIgniter
  *
  * An open source application development framework for PHP
@@ -311,7 +313,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	 *
 	 * Returns current CI instance object
 	 *
-	 * @return CI_Controller
+	 * @return My_Controller
 	 */
 	function &get_instance()
 	{

@@ -1,5 +1,7 @@
 <?php
 /**
+ * ========== WARNING - THIS FILE HAS A CUSTOM CHANGE (01) ==========
+ *
  * CodeIgniter
  *
  * An open source application development framework for PHP
@@ -296,7 +298,62 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	protected function _execute($sql)
 	{
-		return $this->conn_id->query($this->_prep_query($sql));
+
+		$sql = $this->_prep_query($sql);
+        $result = NULL;
+
+        /* execute multi query */
+            if ($this->conn_id->multi_query($sql))
+            {
+                do
+                {
+                    if ($result)
+                        @$result->free();
+
+                    $result = $this->conn_id->store_result();
+                }
+                while ($this->conn_id->more_results() && $this->conn_id->next_result());
+            }
+        else
+            {
+            
+            $message = "Ic ic, lỗi khi thực hiện truy vấn rồi. <b>Câu SQL:</b><br /> $sql<br /><b>Error detail:</b> " . $this->conn_id->error;
+            
+            $message = $message . "\nStack: \n";
+            
+            $v = debug_backtrace();
+            foreach ($v as $val)
+            {
+                if (!isset($val['file']))
+                    continue;
+                if (!isset($val['line']))
+                    continue;
+                if (!isset($val['function']))
+                    $val['function'] = "";
+                if (!isset($val['class']))
+                    $val['class'] = "";
+                $message = "$message
+                file => {$val['file']}
+                line => {$val['line']}
+                function => {$val['function']}
+                class => {$val['class']}
+                ";
+            }
+            
+            $this->trans_rollback();
+            show_error(nl2br($message), 500);
+            
+        }        
+        
+        if ($result === FALSE)
+            $result = 1;
+
+        /* close connection */
+        return $result;//Only return last result
+
+        
+         return $this->conn_id->query($this->_prep_query($sql));
+         
 	}
 
 	// --------------------------------------------------------------------

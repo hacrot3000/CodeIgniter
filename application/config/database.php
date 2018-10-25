@@ -70,15 +70,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
-$active_group = 'default';
+
+//$active_group = 'live';
+$active_group = 'default';//blogs.com - local
+if (IS_PRODUCTION || IS_PRODUCTION_CHUVANAN || IS_PRODUCTION_BACKUP)
+    $active_group = 'live';
+if (IS_X10)
+    $active_group = 'x10live';
+if (IS_CONYEU_COM)
+    $active_group = 'conyeu.com';
+if (IS_CONYEU_US)
+    $active_group = 'conyeu.us';
+if(IS_PRODUCTION_HOSTINGER)
+    $active_group = 'live.hostinger';
+
+$active_group = $active_group . IS_ON_VPS;
+
+$active_record = TRUE;
+
 $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
+	'username' => 'root',
+	'password' => 'password',
+	'database' => 'hacrot3000_blogs',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
@@ -94,3 +111,62 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['conyeu.com'] = $db['default'];
+$db['conyeu.com']['dbprefix'] = 'conyeu_';
+
+$db['conyeu.us'] = $db['default'];
+$db['conyeu.us']['username'] = 'chuongdu_data';
+$db['conyeu.us']['password'] = '%Kky_GIXt]G#';
+$db['conyeu.us']['database'] = 'chuongdu_2278750blogs';
+$db['conyeu.us']['save_queries'] = FALSE;
+$db['conyeu.us']['dbprefix'] = 'conyeu_';
+
+$db['conyeu.us_vps'] = $db['default'];
+$db['conyeu.us_vps']['username'] = 'hacrot3000_cony';
+$db['conyeu.us_vps']['password'] = 'V4fAm6tF';
+$db['conyeu.us_vps']['database'] = 'hacrot3000_cony';
+$db['conyeu.us_vps']['save_queries'] = FALSE;
+$db['conyeu.us_vps']['dbprefix'] = 'conyeu_';
+
+$db['live'] = $db['default'];
+$db['live']['username'] = 'chuongdu_data';
+$db['live']['password'] = '%Kky_GIXt]G#';
+$db['live']['database'] = 'chuongdu_2278750blogs';
+$db['live']['save_queries'] = FALSE;
+
+$db['live_vps'] = $db['default'];
+$db['live_vps']['hostname'] = 'db1.duongtc.com';
+$db['live_vps']['username'] = 'hacrot3000_blogs';
+$db['live_vps']['password'] = 'a9AMAVBc';
+$db['live_vps']['database'] = 'hacrot3000_blogs';
+
+$db['live.hostinger'] = $db['default'];
+$db['live.hostinger']['hostname'] = 'localhost';
+$db['live.hostinger']['username'] = 'u228443728_blogs';
+$db['live.hostinger']['password'] = 'VwVVpA4YWL';
+$db['live.hostinger']['database'] = 'u228443728_blogs';
+$db['live.hostinger']['save_queries'] = FALSE;
+
+$db['x10live'] = $db['default'];
+$db['x10live']['hostname'] = 'localhost';
+$db['x10live']['username'] = 'hacrot30_blogs';
+$db['x10live']['password'] = '%Kky_GIXt]G#';
+$db['x10live']['database'] = 'hacrot30_blogs';
+$db['x10live']['save_queries'] = FALSE;
+
+$db['bongsen'] = $db['default'];
+$db['bongsen']['hostname'] = 'localhost';
+$db['bongsen']['username'] = 'gottrave_bongsen';
+$db['bongsen']['password'] = 'C*+#W(,Ign-d';
+$db['bongsen']['database'] = 'gottrave_bongsen';
+$db['bongsen']['save_queries'] = FALSE;
+
+/*
+
+Database:	hacrot3000_piwi
+Host:	localhost
+Username:	hacrot3000_piwi
+Password:	M23qz6fD
+
+*/
